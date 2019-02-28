@@ -31,6 +31,13 @@
 192.168.254.104 my04
 ```
 
+```mermaid
+graph LR
+A[my01] --> B(my02)
+A --> C(my03)
+A --> D(my04)
+```
+
 * Install some packages
   - Ubuntu:
 ```# apt-get install ebtables ethtool socat```
@@ -154,6 +161,16 @@ Created symlink /etc/systemd/system/multi-user.target.wants/kubelet.service → 
 ```
 
 # Part 4. Create new cluster on k8s master node (candidate)
+
+```mermaid
+sequenceDiagram
+kubeadm ->> kubelet: Start kubelet, Create a cluster, ...
+kubelet ->> CRI: Create containers
+CRI ->> kubelet: Created containers
+kubelet ->> kubeadm: Created a cluster
+#Note left of kubeadm: Master node <br>(candidate)
+```
+
 * If you want to use `Flannel` for CNI:
 ```# kubeadm init --pod-network-cidr=10.244.0.0/16```
 * If you want to use `Calico` for CNI:  
@@ -178,6 +195,58 @@ as root:
   kubeadm join [IP Address]:6443 --token e686n4.iaal2o7v1z2fu921 --discovery-token-ca-cert-hash sha256:cd3e798e567d08d93edc0d728bd3765c7b6a2296352798c99f66292a070eb4db
 ```
 
-* 
+* The token in `kubeadm join ...` command expires after 24 hours. To re-generate `kubeadm join ...` command, execute:
+```
+# kubeadm token create --print-join-command
+```
+
+```mermaid
+sequenceDiagram
+kubectl ->> apiserver: get/create/delete/expose/...
+
+apiserver ->> kubectl: Response
+#Note right of apiserver: Master node
+```
+
+
+
+* To make `kubectl` command work, execute one of these:
+```
+export KUBECONFIG=/etc/kubernetes/admin.conf
+```
+(Set environment variable `KUBECONFIG`. Effective for current shell.)
+
+
+```
+# mkdir -p ~/.kube
+# ln -s /etc/kubernetes/admin.conf ~/.kube/config
+```
+(Create a symbolic link. Effective as long as the symlink exists.)
+
+* Check the nodes in the cluster: `# kubectl get nodes`
+```
+NAME   STATUS     ROLES    AGE    VERSION
+my01   NotReady   master   179m   v1.13.3
+```
+
+* Enable CNI
+  - If you want to use `Flannel` for CNI:
+```# kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/a70459be0084506e4ec919aa1c114638878db11b/Documentation/kube-flannel.yml```
+  - If you want to use `Calico` for CNI:  
+```
+# kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/rbac-kdd.yaml
+# kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/kubernetes-datastore/calico-networking/1.7/calico.yaml
+```
 
 # Part 5. Join k8s worker node (candidate) to the cluster
+
+* Execute `kubeadm join ...` command, which is an output of either `kubeadm init ...` or `# kubeadm token create --print-join-command`.
+
+# Part 6. Tear down the cluster
+```
+# kubectl drain <node name> --delete-local-data --force --ignore-daemonsets
+# kubectl delete node <node name>
+# kubeadm reset
+# iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
+# ipvsadm -C
+```
