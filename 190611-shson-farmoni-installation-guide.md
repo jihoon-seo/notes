@@ -330,6 +330,9 @@ connected to etcd - 10.0.2.15:2379
 }
 ```
 
+- 모든 서비스 삭제  
+`$ curl -X DELETE localhost:1323/svcs | json_pp`
+
 ### Non interactive 모드
 `$ go run farmoni_master.go -addvm-aws=3`
 ```
@@ -432,5 +435,5 @@ connected to etcd - 10.0.2.15:2379
 deleted all aws server list...
 ```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1NzU5NzEzMyw1OTczMzU0OThdfQ==
+eyJoaXN0b3J5IjpbLTE4MjU5ODk1MjYsNTk3MzM1NDk4XX0=
 -->
