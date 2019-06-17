@@ -36,22 +36,23 @@ export PATH=$PATH:$HOME/go/src/github.com/protobuf/bin
 export FARMONI_MASTER=~/go/src/github.com/cloud-barista/poc-farmoni/farmoni_master
 export AZURE_AUTH_LOCATION=~/.azure/azure.auth
 ```
-> 1행: Go 를 Ubuntu 패키지로 설치한다면 필요 없을 것임
-> 2행: Go 를 Ubuntu 패키지로 설치한다면 필요 없을 것임
-> 3행: golang-goprotobuf-dev 를 Ubuntu 패키지로 설치한다면 필요 없을 것임
+> 1행: Go 를 Ubuntu 패키지로 설치한다면 필요 없을 것임  
+2행: Go 를 Ubuntu 패키지로 설치한다면 필요 없을 것임  
+3행: golang-goprotobuf-dev 를 Ubuntu 패키지로 설치한다면 필요 없을 것임
 
-- `.bashrc` 에 기재한 내용을 적용하기 위해
+- `.bashrc` 에 기재한 내용을 적용하기 위해, 다음 중 하나를 수행
   - logoff 후 다시 login
   - `source ~/.bashrc`
   - `. ~/.bashrc`
 
 - Farmoni 소스 다운로드
   - `# go get github.com/cloud-barista/poc-farmoni`
-> 다음과 같은 메시지가 나오기는 함: “package github.com/cloud-barista/poc-farmoni: no Go files in /root/go/src/github.com/cloud-barista/poc-farmoni”
+> 다음과 같은 메시지가 나오기는 함:  
+`“package github.com/cloud-barista/poc-farmoni: no Go files in /root/go/src/github.com/cloud-barista/poc-farmoni”`
 
-> `# go get github.com/cloud-barista/poc-farmoni` 명령을 실행하면, 다음의 명령들을 실행한 것과 같은 효과를 냄
-> `# mkdir ~/go/src/github.com/cloud-barista`
-> `# cd ~/go/src/github.com/cloud-barista`
+> `# go get github.com/cloud-barista/poc-farmoni` 명령을 실행하면, 다음의 명령들을 실행한 것과 같은 효과를 냄  
+> `# mkdir ~/go/src/github.com/cloud-barista`  
+> `# cd ~/go/src/github.com/cloud-barista`  
 > `# git clone https://github.com/cloud-barista/poc-farmoni.git`
 
 
@@ -71,7 +72,7 @@ export AZURE_AUTH_LOCATION=~/.azure/azure.auth
 # go get -u -v github.com/bramvdbogaerde/go-scp
 # go get -u -v github.com/dimchansky/utfbom github.com/mitchellh/go-homedir
 # go get -u -v golang.org/x/oauth2 gopkg.in/yaml.v3
-# go get github.com/labstack/echo
+# go get -u -v github.com/labstack/echo
 ```
 
 ### 클라우드 인증 키 생성 및 설정
@@ -251,26 +252,73 @@ azure:
 ### Interactive 모드 ( `0` 옵션으로 API-server를 실행. API server는 실험적 옵션임)
 `$ ./farmoni_master`
 
-> [Select opt (0:API-server, 1:create-vm, 2:delete-vm, 3:list-vm, 4:monitor-vm]
-Your section : <font color=red>1</font>
-1
-[Select cloud service provider (1:aws, 2:gcp, 3:azure, 4:TBD]
-Your section : <font color=red>1</font>
-[Provide the number of VM to create (e.g., 5)
-Your section : <font color=red>2</font>
-Create VM(s) in aws
-######### addVMaws....
-Successfully tagged instance:aws-etri-shson0
+> [Select opt (0:API-server, 1:create-vm, 2:delete-vm, 3:list-vm, 4:monitor-vm]  
+Your section : <font color=red>1</font>  
+1  
+[Select cloud service provider (1:aws, 2:gcp, 3:azure, 4:TBD]  
+Your section : <font color=red>1</font>  
+[Provide the number of VM to create (e.g., 5)  
+Your section : <font color=red>2</font>  
+Create VM(s) in aws  
+######### addVMaws....  
+Successfully tagged instance:aws-etri-shson0  
 Successfully tagged instance:aws-etri-shson1
 
 ### API SERVER 실행 시, 클라이언트에서 TEST 방법
-- 서비스 생성
+- 서비스 생성  
 `$ curl -X POST   -H 'Content-Type: application/json'   -d '{"name":"service-name07","csp":"aws","num":2}}'   localhost:1323/svcs`
-> {"id":1560324735351,"name":"service-name07","csp":"aws","num":2}
+```JSON
+{
+   "num" : 2,
+   "csp" : "aws",
+   "name" : "service-name07",
+   "id" : 1560324735351
+}
+```
 
-- 모든 서비스 조회
+- 모든 서비스 조회  
 `$ curl localhost:1323/svcs`
-> {"service":[{"id":1560324735351,"name":"service-name07","server":[{"csp":"aws","vmid":"i-0ad6533ff5c66f542","ip":"52.78.198.213:2019"},{"csp":"aws","vmid":"i-00c530be08225b24c","ip":"52.79.158.225:2019"}]},{"id":1560324644709,"name":"service-name03","server":[{"csp":"aws","vmid":"i-0c3d01f99c34e509d","ip":"52.79.160.123:2019"},{"csp":"aws","vmid":"i-08ff23437046535c1","ip":"13.125.54.91:2019"}]}],"response":"Sent via Cloud-Barista","timestamp":"2019-06-12T07:36:28.577639732Z","random":1000}
+```JSON
+{
+   "timestamp" : "2019-06-12T07:36:28.577639732Z",
+   "random" : 1000,
+   "service" : [
+      {
+         "name" : "service-name07",
+         "id" : 1560324735351,
+         "server" : [
+            {
+               "vmid" : "i-0ad6533ff5c66f542",
+               "csp" : "aws",
+               "ip" : "52.78.198.213:2019"
+            },
+            {
+               "vmid" : "i-00c530be08225b24c",
+               "csp" : "aws",
+               "ip" : "52.79.158.225:2019"
+            }
+         ]
+      },
+      {
+         "id" : 1560324644709,
+         "server" : [
+            {
+               "csp" : "aws",
+               "vmid" : "i-0c3d01f99c34e509d",
+               "ip" : "52.79.160.123:2019"
+            },
+            {
+               "vmid" : "i-08ff23437046535c1",
+               "csp" : "aws",
+               "ip" : "13.125.54.91:2019"
+            }
+         ],
+         "name" : "service-name03"
+      }
+   ],
+   "response" : "Sent via Cloud-Barista"
+}
+```
 
 ### Non interactive 모드
 `$ go run farmoni_master.go -addvm-aws=3`
