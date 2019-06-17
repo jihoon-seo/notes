@@ -243,7 +243,7 @@ azure:
 # ./farmoni_master -addvm-gcp=5
 # ./farmoni_master -addvm-azure=5
 # ./farmoni_master -listvm
-# ./farmoni_master -monitoring
+# ./farmoni_master -monitor
 # ./farmoni_master -delvm-aws
 # ./farmoni_master -delvm-gcp
 # ./farmoni_master -delvm-azure
@@ -342,7 +342,7 @@ go run farmoni_master.go -addvm-gcp=5
 go run farmoni_master.go -addvm-azure=5
 
 go run farmoni_master.go -listvm
-go run farmoni_master.go -monitoring
+go run farmoni_master.go -monitor
 
 go run farmoni_master.go -delvm-aws
 go run farmoni_master.go -delvm-gcp
@@ -377,7 +377,7 @@ connected to etcd - 10.0.2.15:2379
 52.78.23.193:2019
 ```
 
-`$ ./farmoni_master –monitoring`
+`$ ./farmoni_master –monitor`
 ```
 ######### monitoring all servers....
 connected to etcd - 10.0.2.15:2379
@@ -435,5 +435,5 @@ connected to etcd - 10.0.2.15:2379
 deleted all aws server list...
 ```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE4MjU5ODk1MjYsNTk3MzM1NDk4XX0=
+eyJoaXN0b3J5IjpbMTg1NDEyMjEwMCw1OTczMzU0OThdfQ==
 -->
