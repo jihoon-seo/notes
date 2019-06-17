@@ -266,7 +266,7 @@ Successfully tagged instance:aws-etri-shson1
 
 ### API SERVER 실행 시, 클라이언트에서 TEST 방법
 - 서비스 생성  
-`$ curl -X POST   -H 'Content-Type: application/json'   -d '{"name":"service-name07","csp":"aws","num":2}}'   localhost:1323/svcs`
+`$ curl -X POST   -H 'Content-Type: application/json'   -d '{"name":"service-name07","csp":"aws","num":2}}'   localhost:1323/svcs | json_pp`
 ```JSON
 {
    "num" : 2,
@@ -277,7 +277,7 @@ Successfully tagged instance:aws-etri-shson1
 ```
 
 - 모든 서비스 조회  
-`$ curl localhost:1323/svcs`
+`$ curl localhost:1323/svcs | json_pp`
 ```JSON
 {
    "timestamp" : "2019-06-12T07:36:28.577639732Z",
