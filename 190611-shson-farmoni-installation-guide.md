@@ -265,12 +265,12 @@ Successfully tagged instance:aws-etri-shson0
 Successfully tagged instance:aws-etri-shson1
 
 `$ ./farmoni_master`
-> [Select opt (0:API-server, 1:create-vm, 2:delete-vm, 3:list-vm, 4:monitor-vm]
-Your section : <font color=red>3</font>
-3
-connected to etcd - 10.0.2.15:2379
-######### all server list....(2)
-[CSP] aws	/ [VmID] i-0f6733dc8455fb3ac	/ [IP] <IP>:2019
+> [Select opt (0:API-server, 1:create-vm, 2:delete-vm, 3:list-vm, 4:monitor-vm]  
+Your section : <font color=red>3</font>  
+3  
+connected to etcd - 10.0.2.15:2379  
+######### all server list....(2)  
+[CSP] aws	/ [VmID] i-0f6733dc8455fb3ac	/ [IP] <IP>:2019  
 [CSP] aws	/ [VmID] i-0e3b84c8cecba48a2	/ [IP] <IP>:2019
 
 
@@ -432,5 +432,5 @@ connected to etcd - 10.0.2.15:2379
 deleted all aws server list...
 ```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwNDA1Nzc3NDEsNTk3MzM1NDk4XX0=
+eyJoaXN0b3J5IjpbLTE1NzU5NzEzMyw1OTczMzU0OThdfQ==
 -->
