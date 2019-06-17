@@ -422,5 +422,5 @@ connected to etcd - 10.0.2.15:2379
 deleted all aws server list...
 ```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNTk3MzM1NDk4XX0=
+eyJoaXN0b3J5IjpbLTc3NzkwMDkwNSw1OTczMzU0OThdfQ==
 -->
